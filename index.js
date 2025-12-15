@@ -8,6 +8,9 @@ const PORT = process.env.PORT;
 const BASE_URL = process.env.BASE_URL;
 const DB_URL = process.env.DB_URL;
 
+const userRouter = require("./routers/user.router");
+const postRouter = require("./routers/post.router");
+
 app.use(cors({ origin: BASE_URL, credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -27,7 +30,9 @@ if (!DB_URL) {
       console.error("MogoDB connection error:", error.message);
     });
 }
-
+//use Router
+app.use("/api/v1/user", userRouter);
+app.use("/api/v1/post", postRouter);
 app.listen(PORT, () => {
   console.log("Server is running on http://localhost:" + PORT);
 });
