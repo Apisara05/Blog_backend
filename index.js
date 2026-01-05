@@ -14,6 +14,8 @@ const postRouter = require("./routers/post.router");
 app.use(cors({ origin: BASE_URL, credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+const upload = multer({ storage: multer.memoryStorage() });
+app.use(upload.single(cover));
 app.get("/", (req, res) => {
   res.send("<h1> Welcome to SE NPRU Blog Restful API </h1>");
 });

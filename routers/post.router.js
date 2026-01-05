@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const authJwt = require("../middlewares/authJWT.middlewares");
+const { upload, uploadToFirebase } = require("../middlewares/file.middleware");
 const {
   createPost,
   getAll,
@@ -10,7 +11,13 @@ const {
   deleteById,
 } = require("../controllers/post.controller");
 //http://localhost:5000/api/v1/user/post
-router.post("/", createPost);
+router.post(
+  "",
+  authJwt.verifyToken,
+  upload,
+  uploadToFirebase,
+  postController.createPost
+);
 router.get("/post-all", getAll);
 router.get("/:id", getById);
 router.get("/author/:id", getByAuthorId);

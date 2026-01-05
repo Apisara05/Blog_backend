@@ -3,6 +3,9 @@ const Post = require("../models/post.model");
 const { post } = require("../routers/post.router");
 
 exports.createPost = async (req, res) => {
+  if(!req.cover){
+    return res.status(400).json({ message: "Image is required" });
+  }
   try {
     const { title, summary, content, cover } = req.body;
     const authorId = req.authorId;
@@ -17,7 +20,7 @@ exports.createPost = async (req, res) => {
       title,
       summary,
       content,
-      cover,
+      cover:req.cover.firebaseUrl,
       author: authorId,
     });
     //เช็คเพราะ จะได้ แกเบัคได้ง่าย ว่าผิดตรงไหน จะได้ไม่ต้องส่งให้ catch หมด
